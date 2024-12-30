@@ -17,7 +17,8 @@ const regurl = "https://ikknngrgxuxgjhplbpey.supabase.co/auth/v1/signup";
 const AUTH = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlra25uZ3JneHV4Z2pocGxicGV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0MzgxNTAsImV4cCI6MjA0MTAxNDE1MH0.DRAvf8nH1ojnJBc3rD_Nw6t1AV8X_g6gmY_HByG2Mag";
 const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlra25uZ3JneHV4Z2pocGxicGV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0MzgxNTAsImV4cCI6MjA0MTAxNDE1MH0.DRAvf8nH1ojnJBc3rD_Nw6t1AV8X_g6gmY_HByG2Mag";
 
-async function delay(ms) {
+async function delay(min, max) {
+  const ms = Math.floor(Math.random() * (max - min + 1) + min);
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -67,7 +68,7 @@ async function readEmailsAndRegister(useProxy) {
     for (const line of lines) {
       const [email, proxy] = line.split(',').map(item => item.trim());
       await registerUser(email, useProxy ? proxy : null);
-      await delay(config.delay);
+      await delay(config.minDelay, config.maxDelay);
     }
   });
 }
